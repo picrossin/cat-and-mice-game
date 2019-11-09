@@ -206,7 +206,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     if (food != null)
                     {
-                        hit.transform.position = m_HandTransform.position + cam.transform.forward * 2;
                         food.Interact(this);
                     }
                 }

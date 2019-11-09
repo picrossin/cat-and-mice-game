@@ -46,7 +46,7 @@ public class Interactable : MonoBehaviour, IInteractable
             m_ThisRigidbody.useGravity = false;
 
             m_HoldJoint = playerScript.m_HandTransform.gameObject.AddComponent<FixedJoint>();
-            m_HoldJoint.breakForce = 800f; // Play with this value
+            m_HoldJoint.breakForce = 1000f; // Play with this value
             m_HoldJoint.connectedBody = m_ThisRigidbody;
 
         }
@@ -59,7 +59,7 @@ public class Interactable : MonoBehaviour, IInteractable
         if (m_Held)
         {
             Drop();
-            Vector3 forceDir = transform.position - playerScript.m_HandTransform.position;
+            Vector3 forceDir = playerScript.cam.transform.forward;
             m_ThisRigidbody.AddForce(forceDir * playerScript.movementSettings.m_ThrowForce);
         }
     }
