@@ -80,6 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         public Camera cam;
+        public int playerNumber = 1;
         public Transform m_HandTransform = null;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
@@ -126,7 +127,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Box = GetComponent<BoxCollider>();
-            mouseLook.Init(transform, cam.transform);
+            mouseLook.Init(transform, cam.transform, playerNumber);
         }
 
 
@@ -134,7 +135,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
 
-            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
+            if (CrossPlatformInputManager.GetButtonDown("Jump" + playerNumber) && !m_Jump)
             {
                 m_Jump = true;
             }
@@ -202,14 +203,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (hit != null)
             {
                 IInteractable food = hit.transform.GetComponent<IInteractable>();
-                if (Input.GetButtonDown("Fire1") && m_CanGrab)
+                if (Input.GetButtonDown("Hold" + playerNumber) && m_CanGrab)
                 {
                     if (food != null)
                     {
                         food.Interact(this);
                     }
                 }
-                if (Input.GetButtonDown("Fire2"))
+                if (Input.GetButtonDown("Throw" + playerNumber))
                 {
                     if (food != null)
                     {
@@ -245,8 +246,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             Vector2 input = new Vector2
             {
-                x = CrossPlatformInputManager.GetAxis("Horizontal"),
-                y = CrossPlatformInputManager.GetAxis("Vertical")
+                x = CrossPlatformInputManager.GetAxis("Horizontal" + playerNumber),
+                y = CrossPlatformInputManager.GetAxis("Vertical" + playerNumber)
             };
             movementSettings.UpdateDesiredTargetSpeed(input);
             return input;
