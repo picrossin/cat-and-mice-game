@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public List<FoodType> m_Collected;
+    public List<FoodType> m_ShoppingList;
+
     // Start is called before the first frame update
     void Start()
     {
-        List<FoodType> shoppingList = new List<FoodType>();
-        shoppingList.Add(FoodType.Cheese);
+        m_Collected = new List<FoodType>();
+        m_ShoppingList = new List<FoodType>();
+        m_ShoppingList.Add(FoodType.Cheese);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (m_Collected.Count == m_ShoppingList.Count)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
