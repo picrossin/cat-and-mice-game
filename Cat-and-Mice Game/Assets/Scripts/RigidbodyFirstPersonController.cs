@@ -206,12 +206,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     if (food != null)
                     {
+                        hit.transform.position = m_HandTransform.position + cam.transform.forward * 2;
                         food.Interact(this);
                     }
                 }
-                if (Input.GetButtonDown("Fire2") && m_CanGrab)
+                if (Input.GetButtonDown("Fire2"))
                 {
-                    Debug.Log("Right click");
                     if (food != null)
                     {
                         food.Action(this);

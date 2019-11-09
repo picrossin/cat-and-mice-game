@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FoodType
+{
+    Cheese
+}
+
 public class Interactable : MonoBehaviour, IInteractable
 {
-    public enum FoodType
-    {
-        Cheese
-    }
-
     public FoodType m_FoodType;
     public bool m_Held = false;
 
@@ -35,7 +35,6 @@ public class Interactable : MonoBehaviour, IInteractable
     // Pick up the object, or drop it if it is already being held
     public void Interact(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController playerScript)
     {
-        Debug.Log("Pickup/drop");
         // Is the object currently being held?
         if (m_Held)
         {
@@ -43,12 +42,11 @@ public class Interactable : MonoBehaviour, IInteractable
         }
         else
         {
-            Debug.Log("Picked up object");
             m_Held = true;
             m_ThisRigidbody.useGravity = false;
 
             m_HoldJoint = playerScript.m_HandTransform.gameObject.AddComponent<FixedJoint>();
-            m_HoldJoint.breakForce = 10000f; // Play with this value
+            m_HoldJoint.breakForce = 800f; // Play with this value
             m_HoldJoint.connectedBody = m_ThisRigidbody;
 
         }
@@ -61,7 +59,6 @@ public class Interactable : MonoBehaviour, IInteractable
         if (m_Held)
         {
             Drop();
-            Debug.Log("Attempting throw");
             Vector3 forceDir = transform.position - playerScript.m_HandTransform.position;
             m_ThisRigidbody.AddForce(forceDir * playerScript.movementSettings.m_ThrowForce);
         }
