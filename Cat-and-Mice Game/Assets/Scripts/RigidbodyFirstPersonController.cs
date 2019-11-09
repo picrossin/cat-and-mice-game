@@ -18,6 +18,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float ClimbSpeed = 4.0f;
             public KeyCode RunKey = KeyCode.LeftShift;
             public float JumpForce = 30f;
+            public float m_ThrowForce = 1000f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
 
@@ -79,6 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         public Camera cam;
+        public Transform m_HandTransform = null;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
@@ -88,7 +90,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private BoxCollider m_Box;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, m_IsClimbing, m_PreviouslyClimbing;
+        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, m_IsClimbing, m_PreviouslyClimbing, m_CanGrab;
+        private Rigidbody m_HoldingItem;
 
 
         public Vector3 Velocity
@@ -159,10 +162,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     m_RigidBody.velocity = Vector3.up * movementSettings.ClimbSpeed;
                 }
-                else if (!m_IsClimbing && m_PreviouslyClimbing && !m_IsGrounded)
-                {
-                    //m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
-                }
                 else
                 {
                     if (m_RigidBody.velocity.sqrMagnitude <
@@ -199,6 +198,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
+            Collider hit = CheckGrab(cam.transform.forward).collider;
+            if (hit != null)
+            {
+                IInteractable food = hit.transform.GetComponent<IInteractable>();
+                if (Input.GetButtonDown("Fire1") && m_CanGrab)
+                {
+                    if (food != null)
+                    {
+                        food.Interact(this);
+                    }
+                }
+                if (Input.GetButtonDown("Fire2") && m_CanGrab)
+                {
+                    Debug.Log("Right click");
+                    if (food != null)
+                    {
+                        food.Action(this);
+                    }
+                }
+            }
         }
 
 
@@ -286,6 +305,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_IsClimbing = false;
             }
+        }
+
+        private RaycastHit CheckGrab(Vector3 direction)
+        {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(transform.position, direction, out hitInfo, 3.5f) && hitInfo.collider.transform.tag == "Interactable")
+            {
+                m_CanGrab = true;
+            }
+            else
+            {
+                m_CanGrab = false;
+            }
+            return hitInfo;
         }
     }
 }
