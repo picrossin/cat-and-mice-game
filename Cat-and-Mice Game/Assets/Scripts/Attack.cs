@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     public int m_PlayerNumber = 3;
+    public GameObject explosion;
     private bool inRange = false;
     private bool canAttack = true;
     private Collider mouseCollision;
@@ -40,6 +41,7 @@ public class Attack : MonoBehaviour
                         mouseCollision.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseController>();
                     mouse.playerHealth--;
                     canAttack = false;
+                    Instantiate(explosion, mouse.transform.position, Quaternion.identity);
                 }
             }
             if (Input.GetButtonUp("Hold" + m_PlayerNumber))

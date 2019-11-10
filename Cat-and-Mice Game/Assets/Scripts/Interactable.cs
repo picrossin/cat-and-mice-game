@@ -46,7 +46,7 @@ public class Interactable : MonoBehaviour, IInteractable
             m_ThisRigidbody.useGravity = false;
 
             m_HoldJoint = playerScript.m_HandTransform.gameObject.AddComponent<FixedJoint>();
-            m_HoldJoint.breakForce = 1000f; // Play with this value
+            m_HoldJoint.breakForce = 2000f; // Play with this value
             m_HoldJoint.connectedBody = m_ThisRigidbody;
 
         }
