@@ -80,6 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public Camera cam;
         public int playerNumber = 1;
+        public Transform m_HandTransform = null;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
@@ -124,6 +125,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Box = GetComponent<BoxCollider>();
             mouseLook.Init(transform, cam.transform, playerNumber);
+            Attack attack = m_HandTransform.GetComponent<Attack>();
+            if (attack != null)
+            {
+                attack.Init(playerNumber);
+            }
         }
 
 
