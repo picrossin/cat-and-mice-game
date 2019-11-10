@@ -149,13 +149,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                 m_RigidBody.useGravity = false;
                 m_RigidBody.isKinematic = false;
-                Vector3 movePosition = transform.position;
- 
-                movePosition.x = Mathf.MoveTowards(transform.position.x, cat.transform.position.x, 3f * Time.deltaTime);
-                movePosition.y = Mathf.MoveTowards(transform.position.y, cat.transform.position.y, 3f * Time.deltaTime);
-                movePosition.z = Mathf.MoveTowards(transform.position.z, cat.transform.position.z, 3f * Time.deltaTime);
-
-                m_RigidBody.MovePosition(movePosition);
+                m_RigidBody.transform.eulerAngles = new Vector3(0, 0, 180);
             }
         }
 
@@ -238,15 +232,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         }
                     }
                 }
-            }
-        }
-
-        private void OnTriggerEnter(Collider collision)
-        {
-            if (dead && collision.gameObject.tag == "Cat")
-            {
-                Debug.Log("Died");
-                cam.enabled = false;
             }
         }
 

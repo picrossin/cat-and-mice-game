@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Characters.FirstPerson
@@ -84,6 +85,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
+        public MouseController mouse1;
+        public MouseController mouse2;
 
 
         private Rigidbody m_RigidBody;
@@ -140,6 +143,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (CrossPlatformInputManager.GetButtonDown("Jump" + playerNumber) && !m_Jump)
             {
                 m_Jump = true;
+            }
+
+            if (mouse1.playerHealth == 0 && mouse2.playerHealth == 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
 

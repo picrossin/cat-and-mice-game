@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum FoodType
 {
-    Cheese
+    Cheese, Apple, Banana, CheeseWheel, Watermelon, Milk, Olive, Ribeye,
 }
 
 public class Interactable : MonoBehaviour, IInteractable
