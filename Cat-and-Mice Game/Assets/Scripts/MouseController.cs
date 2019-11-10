@@ -143,7 +143,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Jump = true;
             }
 
-            if (playerHealth == 0)
+            if (playerHealth <= 0)
             {
                 dead = true;
 

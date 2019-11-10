@@ -145,7 +145,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Jump = true;
             }
 
-            if (mouse1.playerHealth == 0 && mouse2.playerHealth == 0)
+            if (mouse1.playerHealth <= 0 && mouse2.playerHealth <= 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
