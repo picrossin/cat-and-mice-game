@@ -27,9 +27,10 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (m_Collected.Count == m_ShoppingList.Count)
+        if (m_Collected.Count == m_ShoppingList.Count || Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("Title");
         }
+
     }
 }

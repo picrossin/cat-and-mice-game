@@ -147,7 +147,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (mouse1.playerHealth <= 0 && mouse2.playerHealth <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene("Title");
             }
         }
 

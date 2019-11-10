@@ -193,7 +193,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     if (m_Jump)
                     {
-                        m_RigidBody.drag = 0f;
+                        m_RigidBody.drag = 1f;
                         m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                         m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
                         m_Jumping = true;
@@ -206,7 +206,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
                 else
                 {
-                    m_RigidBody.drag = 0f;
+                    m_RigidBody.drag = 1f;
                     if (m_PreviouslyGrounded && !m_Jumping)
                     {
                         StickToGroundHelper();
@@ -325,7 +325,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private RaycastHit CheckGrab(Vector3 direction)
         {
             RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, direction, out hitInfo, 3.5f) && hitInfo.collider.transform.tag == "Interactable")
+            if (Physics.Raycast(transform.position, direction, out hitInfo, 5f) && hitInfo.collider.transform.tag == "Interactable")
             {
                 m_CanGrab = true;
             }
@@ -333,6 +333,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_CanGrab = false;
             }
+            if (hitInfo.collider != null)
+                Debug.Log(hitInfo.collider.transform.tag);
             return hitInfo;
         }
     }
