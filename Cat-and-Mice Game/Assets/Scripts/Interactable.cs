@@ -33,7 +33,7 @@ public class Interactable : MonoBehaviour, IInteractable
     }
 
     // Pick up the object, or drop it if it is already being held
-    public void Interact(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController playerScript)
+    public void Interact(UnityStandardAssets.Characters.FirstPerson.MouseController playerScript)
     {
         // Is the object currently being held?
         if (m_Held)
@@ -53,7 +53,7 @@ public class Interactable : MonoBehaviour, IInteractable
     }
 
     // Throw the object
-    public void Action(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController playerScript)
+    public void Action(UnityStandardAssets.Characters.FirstPerson.MouseController playerScript)
     {
         // Is the object currently being held?
         if (m_Held)

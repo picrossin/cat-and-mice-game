@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController script);
-    void Action(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController script);
+    void Interact(UnityStandardAssets.Characters.FirstPerson.MouseController script);
+    void Action(UnityStandardAssets.Characters.FirstPerson.MouseController script);
 }
