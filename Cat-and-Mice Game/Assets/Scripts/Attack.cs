@@ -12,13 +12,11 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Inside range of attack");
         mouseCollision = collision;
         inRange = true;
     }
     private void OnTriggerExit(Collider collision)
     {
-        Debug.Log("Leaving range of attack");
         inRange = false;
     }
 

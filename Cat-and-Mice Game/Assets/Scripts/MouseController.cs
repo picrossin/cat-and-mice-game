@@ -151,6 +151,29 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_RigidBody.isKinematic = false;
                 m_RigidBody.transform.eulerAngles = new Vector3(0, 0, 180);
             }
+
+            if (!dead)
+            {
+                Collider hit = CheckGrab(cam.transform.forward).collider;
+                if (hit != null)
+                {
+                    IInteractable food = hit.transform.GetComponent<IInteractable>();
+                    if (Input.GetButtonDown("Hold" + playerNumber) && m_CanGrab)
+                    {
+                        if (food != null)
+                        {
+                            food.Interact(this);
+                        }
+                    }
+                    if (Input.GetButtonDown("Throw" + playerNumber))
+                    {
+                        if (food != null)
+                        {
+                            food.Action(this);
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -213,25 +236,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                 }
                 m_Jump = false;
-                Collider hit = CheckGrab(cam.transform.forward).collider;
-                if (hit != null)
-                {
-                    IInteractable food = hit.transform.GetComponent<IInteractable>();
-                    if (Input.GetButtonDown("Hold" + playerNumber) && m_CanGrab)
-                    {
-                        if (food != null)
-                        {
-                            food.Interact(this);
-                        }
-                    }
-                    if (Input.GetButtonDown("Throw" + playerNumber))
-                    {
-                        if (food != null)
-                        {
-                            food.Action(this);
-                        }
-                    }
-                }
             }
         }
 
@@ -291,7 +295,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_PreviouslyGrounded = m_IsGrounded;
             RaycastHit hitInfo;
-            Debug.DrawRay(transform.position, -Vector3.up, Color.red);
             if (Physics.Raycast(transform.position, -Vector3.up, out hitInfo, .5f))
             {
                 m_IsGrounded = true;
@@ -312,7 +315,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_PreviouslyClimbing = m_IsClimbing;
             RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, direction, out hitInfo, 1f))
+            if (Physics.Raycast(transform.position, direction, out hitInfo, 1f) && hitInfo.collider.transform.tag != "CatHand")
             {
                 m_IsClimbing = true;
             }
@@ -333,8 +336,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_CanGrab = false;
             }
-            if (hitInfo.collider != null)
-                Debug.Log(hitInfo.collider.transform.tag);
             return hitInfo;
         }
     }
